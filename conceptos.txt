@@ -1,0 +1,10 @@
+Aclaración importante:
+
+AJUSTE_CIERRE: corrige el desfase del cierre actual.
+BASE_TURNO: establece la base del turno siguiente.
+
+Principios del software.
+1. el dueño del negocio define un usuario ADMIN. (usualmente es él mismo)
+2. el software debe permitir al ADMIN delegar aspectos operacionales (especialmente gestion FINANCIERA)
+3. el ADMIN debe estar al tanto de lo que ocurre en las finanzas del negocio, incluso si esta ausente algunos dias seguidos.
+3. el software debe ser lo mas simple y minimalista posible.
