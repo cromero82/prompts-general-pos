@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8"/><title>Correos y plantillas</title>
+<style>body{font-family:system-ui,sans-serif;max-width:40rem;margin:1.5rem auto;line-height:1.45;padding:0 1rem} .ej{background:#f4f5f7;padding:.8rem 1rem;border-radius:8px} a{color:#283593}</style>
+</head><body>
+<article data-ayuda-id="of.emails">
+  <h1>Correos del banco y plantillas</h1>
+  <p>Las alertas de Bancolombia (y similares) se reenvían a la tienda. Una <strong>plantilla de extracción</strong> es un <em>fragmento</em> del mensaje, no el correo entero.</p>
+  <div class="ej">
+    <strong>Ejemplo RETIRASTE.</strong> Plantilla: <code>Retiraste {{monto}} en {{lugarRetiro}} de tu</code><br/>
+    Correo: <code>Bancolombia: Retiraste $1.000.000,00 en MF_PUERNOR3 de tu T.Deb **6512…</code><br/>
+    Extrae monto 1.000.000 y lugar MF_PUERNOR3. El «Bancolombia:» no hace falta en la plantilla.
+  </div>
+  <p>En Gmail hace falta un filtro por cada tipo de frase (<em>Retiraste</em>, <em>recibiste una transferencia</em>, etc.).</p>
+  <p>Pantalla: Gestión de notificaciones de medios electrónicos. Destino OF de la plantilla suele ser Sin Clasificar.</p>
+  <p><strong>Relacionado:</strong> <a href="sin-clasificar.html">Sin Clasificar</a> · <a href="legalizar.html">Legalizar</a></p>
+</article>
+<p><a href="../index.html">Índice</a></p>
+</body></html>

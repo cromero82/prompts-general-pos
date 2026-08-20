@@ -1,0 +1,162 @@
+{
+  "modulo": "origenes-fondos",
+  "rutaApp": "/apps/financiero/origenes-fondos",
+  "tituloModulo": "Orígenes de fondos",
+  "introHtml": "index.html",
+  "articulos": [
+    {
+      "ayudaId": "of.pagina",
+      "titulo": "Qué es esta pantalla",
+      "htmlFile": "secciones/pagina.html",
+      "selectores": ["h2.title", ".origenes-page"],
+      "relacionados": ["of.arbol", "of.footer"]
+    },
+    {
+      "ayudaId": "of.arbol",
+      "titulo": "Tarjetas de orígenes (árbol)",
+      "htmlFile": "secciones/arbol.html",
+      "selectores": [".origen-card", ".grupo-origen"],
+      "relacionados": ["of.expandir-hijos", "of.menu-origen", "of.trasladar-dnd"]
+    },
+    {
+      "ayudaId": "of.expandir-hijos",
+      "titulo": "Ver u ocultar bolsillos",
+      "htmlFile": "secciones/expandir-hijos.html",
+      "selectores": [".expand-hijos-btn"],
+      "relacionados": ["of.arbol", "of.sin-clasificar"]
+    },
+    {
+      "ayudaId": "of.menu-origen",
+      "titulo": "Menú de la tarjeta (⋮)",
+      "htmlFile": "secciones/menu-origen.html",
+      "selectores": [".card-menu-btn"],
+      "relacionados": ["of.arbol"]
+    },
+    {
+      "ayudaId": "of.header.trasladar",
+      "titulo": "Trasladar (barra superior)",
+      "htmlFile": "secciones/btn-trasladar-header.html",
+      "selectores": [".acciones-admin button"],
+      "relacionados": ["of.btn.trasladar", "of.reglas-traslado"]
+    },
+    {
+      "ayudaId": "of.header.entrada",
+      "titulo": "Entrada manual",
+      "htmlFile": "secciones/btn-entrada.html",
+      "selectores": [],
+      "relacionados": ["of.pagina"]
+    },
+    {
+      "ayudaId": "of.header.prestamo",
+      "titulo": "Préstamo",
+      "htmlFile": "secciones/btn-prestamo.html",
+      "selectores": [],
+      "relacionados": ["of.pagina"]
+    },
+    {
+      "ayudaId": "of.header.ajuste",
+      "titulo": "Ajuste de saldo",
+      "htmlFile": "secciones/btn-ajuste.html",
+      "selectores": [],
+      "relacionados": ["of.pagina"]
+    },
+    {
+      "ayudaId": "of.header.clasificacion",
+      "titulo": "Por clasificación",
+      "htmlFile": "secciones/btn-clasificacion.html",
+      "selectores": [],
+      "relacionados": ["of.legalizar"]
+    },
+    {
+      "ayudaId": "of.tabla.movimientos",
+      "titulo": "Tabla de movimientos",
+      "htmlFile": "secciones/tabla-movimientos.html",
+      "selectores": [".mov-table", ".historial"],
+      "relacionados": ["of.col.detalle", "of.btn.trasladar"]
+    },
+    {
+      "ayudaId": "of.col.detalle",
+      "titulo": "Columna Detalle",
+      "htmlFile": "secciones/col-detalle.html",
+      "selectores": [".detalle-cell"],
+      "relacionados": ["of.btn.trasladar", "of.btn.formalizar", "of.btn.cuenta-dueno", "of.btn.ver"]
+    },
+    {
+      "ayudaId": "of.btn.trasladar",
+      "titulo": "Trasladar (fila)",
+      "htmlFile": "secciones/btn-trasladar-fila.html",
+      "selectores": [".btn-formalizar"],
+      "relacionados": ["of.reglas-traslado", "of.sin-clasificar", "of.header.trasladar"]
+    },
+    {
+      "ayudaId": "of.btn.formalizar",
+      "titulo": "Formalizar egreso",
+      "htmlFile": "secciones/btn-formalizar.html",
+      "selectores": [],
+      "relacionados": ["of.sin-clasificar", "of.btn.trasladar"]
+    },
+    {
+      "ayudaId": "of.btn.cuenta-dueno",
+      "titulo": "A Cuenta del dueño",
+      "htmlFile": "secciones/btn-cuenta-dueno.html",
+      "selectores": [".btn-clasificar-dueno"],
+      "relacionados": ["of.legalizar", "of.btn.trasladar"]
+    },
+    {
+      "ayudaId": "of.btn.ver",
+      "titulo": "Ver documento",
+      "htmlFile": "secciones/btn-ver.html",
+      "selectores": [".btn-ver-ref"],
+      "relacionados": ["of.tabla.movimientos"]
+    },
+    {
+      "ayudaId": "of.reglas-traslado",
+      "titulo": "A dónde se puede trasladar",
+      "htmlFile": "secciones/reglas-traslado.html",
+      "selectores": [],
+      "relacionados": ["of.btn.trasladar", "of.trasladar-dnd"]
+    },
+    {
+      "ayudaId": "of.trasladar-dnd",
+      "titulo": "Arrastrar y soltar",
+      "htmlFile": "secciones/arrastrar.html",
+      "selectores": [".origen-card", ".mov-row-draggable"],
+      "relacionados": ["of.reglas-traslado", "of.footer"]
+    },
+    {
+      "ayudaId": "of.sin-clasificar",
+      "titulo": "Sin Clasificar (bolsa)",
+      "htmlFile": "secciones/sin-clasificar.html",
+      "selectores": [],
+      "relacionados": ["of.btn.trasladar", "of.btn.formalizar", "of.emails"]
+    },
+    {
+      "ayudaId": "of.emails",
+      "titulo": "Correos del banco y plantillas",
+      "htmlFile": "secciones/emails-plantillas.html",
+      "selectores": [],
+      "relacionados": ["of.sin-clasificar", "of.legalizar"]
+    },
+    {
+      "ayudaId": "of.legalizar",
+      "titulo": "Legalizar un correo",
+      "htmlFile": "secciones/legalizar.html",
+      "selectores": [],
+      "relacionados": ["of.btn.cuenta-dueno", "of.emails"]
+    },
+    {
+      "ayudaId": "of.footer",
+      "titulo": "Barra inferior (footer)",
+      "htmlFile": "secciones/footer.html",
+      "selectores": ["vex-footer"],
+      "relacionados": ["of.col.detalle", "of.trasladar-dnd"]
+    },
+    {
+      "ayudaId": "of.modo-cuentas",
+      "titulo": "Modo estricto o flexible",
+      "htmlFile": "secciones/modo-cuentas.html",
+      "selectores": [".modo-badge"],
+      "relacionados": ["of.pagina"]
+    }
+  ]
+}
