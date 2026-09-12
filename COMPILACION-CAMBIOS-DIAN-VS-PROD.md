@@ -103,7 +103,7 @@ Referencia: dump adjunto en el repo backend (`backups/dump-controlneg_rmx_db-202
 ### 3.2 Comportamientos clave (esta conversación / dian)
 
 1. **Base inicial:** si no hay corte ni movimiento `BASE_INICIAL` → admin registra inversión en Caja: Efectivo (motivo `INVERSION_INICIAL_BASE`). Define Base del primer corte; watermark de movimientos.
-2. **consultar-rango:** Base desde `base_siguiente_efectivo` o inversión inicial; ventas con watermark `id > ultimo_historial_recibo_id` agregadas desde **`historial_recibo_pago`** (multipago); movimientos con `id > ultimo_movimiento_origen_fondos_id`; excluye `SALIDA_EGRESO` / `ENTRADA_VENTA` de columna Movimientos.
+2. **consultar-rango:** Base desde `base_siguiente_efectivo` o inversión inicial; ventas con watermark `id > ultimo_historial_recibo_id` agregadas desde **`historial_recibo_pago`** (multipago); movimientos con `id > ultimo_movimiento_origen_fondos_id`; excluye `SALIDA_EGRESO` / `ENTRADA_VENTA` de columna Movimientos; también el débito `MOVIMIENTO BANCO POR IDENTIFICAR` (QR/Nequi/…) si ese par ya se formalizó como egreso.
 3. **Al crear corte:** `ENTRADA_VENTA` por medio → OF (para que Distribución use saldo real = Base+Ventas−Egresos±Mov). Luego AJUSTE_CIERRE si desfase; watermarks; `distribucion_efectivo_estado=PENDIENTE`.
 4. **Distribución:** Base + Caja Menor + Caja General = saldo Caja Efectivo; traslados `origen_tipo=DISTRIBUCION`; guarda `base_siguiente_efectivo`.
 5. **Caja Menor/General:** sin `metodo_pago_id` (no aparecen como fila fantasma en cierre).

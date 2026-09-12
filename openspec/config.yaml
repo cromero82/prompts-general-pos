@@ -1,0 +1,49 @@
+schema: spec-driven
+
+context: |
+  Language: spanish
+  All artifacts must be written in spanish.
+  Keep OpenSpec structural headings and SHALL/MUST keywords in English.
+
+  ## Producto
+  POS Infinito (tiendas Colombia). Monorepo lógico en repos/:
+  - infinito-ai-front (Angular, :4200) — rama típica dian-version
+  - pos-relational-data-service (Java, :8088) — BD controlneg_rmx_db
+  - puente-tienda (Java, :8095) — QR / email inbound / confirmación electrónica
+  - infinito-security, infinito-smtp-service, intinito-launcher (typo histórico del repo)
+
+  Hostnames públicos (túnel):
+  - cotiza.mayaksoluciones.com → laptop dev (Caddy :8080 → puente :8095)
+  - pos-sandbox.mayaksoluciones.com → sandbox (Caddy :8180 → puente :8195)
+  - tienda-infinito.mayaksoluciones.com → caja standalone (túnel propio, no pos-local)
+  Worker: pagos@ fan-out cotiza+sandbox; To con "tienda-infinito" → solo la caja.
+
+  ## Dual docs (Cursor + OpenSpec)
+  - OpenSpec (este árbol): source of truth de comportamiento (specs/) + cambios (changes/).
+  - Cursor narrative: contextos-ia/*.md y .cursor/rules en infinito-ai-front.
+  - Al documentar o cambiar features: actualizar AMBOS. Ver DUAL-DOCS-CURSOR-OPENSPEC.md.
+  - Modo futuro "OpenSpec first": /opsx-propose → apply → archive; Cursor rules solo resumen + globs.
+
+  ## Confirmación pagos electrónicos
+  Capacidad: confirmacion-pagos-electronicos.
+  Email Bancolombia → Cloudflare → puente-tienda → HRE + panel flotante FE.
+  Docs narrativos: contextos-ia/confirmacion-pagos-electronicos.md, interceptar-pagos-tunel.md (plan original).
+
+rules:
+  proposal:
+    - Incluir Non-goals cuando el alcance pueda confundirse con CxC, multipago o API Bancolombia.
+    - Listar repos afectados (FE / pos-relational / puente-tienda).
+  design:
+    - Nombrar tablas clave (historial_recibos_electronicos, notificacion_email_pago) y puertos (:8095).
+  tasks:
+    - Separar tareas FE / puente / pos-relational cuando aplique.
+
+operations:
+  apply:
+    guidance:
+      - No reiniciar puente-tienda (:8095) salvo que el usuario lo pida; él lo controla manualmente.
+      - Preferir cambios mínimos alineados al spec delta.
+  archive:
+    guidance:
+      - Tras archivar, sincronizar resumen en contextos-ia/ y rule Cursor si existe.
+      - Actualizar README de prompts-general-pos si aparece capacidad nueva.

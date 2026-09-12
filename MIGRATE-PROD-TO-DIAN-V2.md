@@ -9,6 +9,8 @@ inicial, estado ARCHIVADO, `id_referencia`, …).
 > `pos-relational-data-service/src/main/resources/doc/contextos/database/apply-migrate-prod-to-dian-v2.sh`  
 > y `…/database/README-SPRINTS.md`.  
 > Este markdown debe mantenerse sincronizado con ese `.sh`.
+>
+> Dump **prod viejo** (solo tickets/historial, sin inventario/notif): crear `entrada_inventario` + `historial_precio_producto` antes de `10_`; `28_confirmacion_pagos_electronicos` + `29_` + `30_plantilla_notificacion_pago` + `31_` + `33_` antes de `36_`/`44_`/`53_`. El wrapper aplica `32_` (HRE.nombre_cliente — **sin esto Historial Tickets 500**) y `62_` (`VTA-LEGACY-*` → `VTA-######`). `05_backfill` emite **`VTA-######`**, no `VTA-LEGACY-`. No usar `25_repair`. Si el destino es `controlneg_rmx_db_v02`, ver [MIGRATE-TIENDA-INFINITO-V02.md](MIGRATE-TIENDA-INFINITO-V02.md) opción C + **Lecciones ensayo laptop**.
 
 ## Repositorios de referencia
 
@@ -43,7 +45,7 @@ Dejar el schema PostgreSQL `controlneg_rmx_db` con **datos de negocio preservado
 
 ### Núcleo ingresos (estándar)
 
-- **Ingresos dashboard = Ventas sistema** (`totalVentasSistema` / `historial_recibo_pago`), no Contado.
+- **Ingresos dashboard = Ventas sistema** (`totalVentasSistema` / `historial_recibo_pago` / `corte_venta.total_ventas_sistema`), no Contado ni Esperado (`consultar-rango.total`). SQL `65_`.
 - Contado / Diferencia = control de caja (arqueo).
 - Glosario: `prompts-general-pos/GLOSARIO-NUCLEO-FINANCIERO.md`
 
@@ -57,8 +59,8 @@ Dejar el schema PostgreSQL `controlneg_rmx_db` con **datos de negocio preservado
 ## Pasos obligatorios para la IA
 
 1. **Backup** de la BD destino antes de migrar (`pg_dump`). No continuar sin confirmación si no hay backup.
-2. Confirmar URL: `DB_URL` o default local `postgresql://…@localhost:5432/controlneg_rmx_db`.
-3. Ejecutar el script maestro (idempotente en lo posible):
+2. Confirmar URL: **obligatoria**, `…/controlneg_rmx_db_v02`. El wrapper **rechaza** `controlneg_rmx_db` (sin `_v02`).
+3. Ejecutar el script maestro (idempotente; lee `migrate-tienda-infinito-v02.files`):
 
 ```bash
 chmod +x pos-relational-data-service/src/main/resources/doc/contextos/database/apply-migrate-prod-to-dian-v2.sh
@@ -86,13 +88,15 @@ El wrapper aplica (omitir `25_repair_*`):
 
 | # | Script | Efecto |
 |---|--------|--------|
-| 00–05 | establecimiento, consecutivos, motivos op., tipos mov. inv., estado recibos, documento_venta (+ backfill) | Capa documental / DIAN base |
+| 00–05 | establecimiento, consecutivos, motivos op., tipos mov. inv., estado recibos, documento_venta (+ backfill **VTA-######**) | Capa documental / DIAN base |
+| 62 | `VTA-LEGACY-*` → `VTA-######` (idempotente) | Historial / tirilla |
 | 07–09 | egreso MP, corte extend, funcionalidad_pos, metodo_pago extend | Finanzas base |
 | 10–11 | movimiento_inventario, inventario_kardex | Inventario |
 | 12–18 | manejo cuentas, catálogos bolsillo, cuenta/movimiento, egreso↔cuenta, parent, **rename → origen_fondos** | Orígenes de fondos |
 | 19–20 | motivo desfase, workflow corte + `corte_venta_detalle` | Cierre B5/B8 |
 | 21–24 | fix traslado, watermark MOF, distribución efectivo, base inicial | Post-B8 |
-| 26 | unlink Caja Menor MP | Contabilidad OF |
+| 26 | unlink Caja Menor MP (si el nombre ya es Caja Menor/General) | Contabilidad OF |
+| 63 | OF 4/5 → **Caja Menor** / **Caja General** (FISICA, sin MP) | Catálogo laptop; `14_` deja labels de `metodo_pago` prod |
 | 27 | `id_referencia` en ledger | Trazabilidad egreso/corte |
 | 28 | `estado` ARCHIVADO + unique hermanos | Gestión OF |
 | 30 | `historial_recibo_pago` + `codigo_dian_payment_means` + backfill | Multipago (BD) |
@@ -100,14 +104,17 @@ El wrapper aplica (omitir `25_repair_*`):
 | 35 | `accion_esperada` + `MOVIMIENTO_NO_REGISTRADO` | Diferencia → acción |
 | 36 | clasificar notif. email + motivos LEGALIZAR_* | Legalizar retiros |
 | 37 | `cuenta_por_cobrar` + `abono_cxc` | CxC schema (UI luego) |
+| 44–45 | HRE abono CxC + `monto_recibido` | Panel QR |
+| 32 | HRE `nombre_cliente` | **Historial Tickets carga**; sin esto el search 500 |
+| 64 | Contado efectivo legacy → base config + Caja Menor | Primer cierre v02 con Base 150000 |
 
 Cadena resumida:
 
 ```text
-00→05(+backfill) → 07→08→06→09 → 10→11 → 12→18 → 19→20 → 21→24 → 26→27 → 28 → 30 → 34→37
+00→05(+backfill)→62 → 07→08→06→09 → 10→11 → 12→18 → 19→20 → 21→24 → 26→63→27 → 28 → 30 → 34→37 → 41→45 → 32 → 64
 ```
 
-> `28_confirmacion_pagos_electronicos` / `29_notificacion_email_*` existen en la carpeta pero **no** van en este wrapper (flujo QR/email aparte).
+> `28_confirmacion_pagos_electronicos` / `29_notificacion_email_*` existen en la carpeta pero **no** van en este wrapper (flujo QR/email aparte). **Sí** hay que aplicarlos como prereq si el dump no trae HRE; si no, `44_`/`32_` fallan. Tras `28_confirmacion`, corregir `email_alerta_pagos` a `tienda-infinito@…` en pila v02.
 
 Ver también `COMPILACION-CAMBIOS-DIAN-VS-PROD.md` y `AI-HANDOFF-FINANZAS-2026-08.md`.
 
@@ -115,7 +122,7 @@ Ver también `COMPILACION-CAMBIOS-DIAN-VS-PROD.md` y `AI-HANDOFF-FINANZAS-2026-0
 
 | Tema | Comportamiento |
 |---|---|
-| Tickets / recibos / historial | **Se conservan**; no se truncan |
+| Tickets / recibos / historial | **Se conservan**; no se truncan. Pagados → `documento_venta` `VTA-######` + lista Historial con ese número. Requiere `32_` (HRE.nombre_cliente) o el search 500. |
 | Egresos viejos | Backfill `origen_fondos_id` / `metodo_pago_id` en `07`/`16` |
 | Cortes viejos | `20` crea `corte_venta_detalle` desde `ventas_tipo`; estado `revisada` |
 | Ledger OF | Vacío hasta movimientos nuevos / cortes con `ENTRADA_VENTA` |
@@ -197,3 +204,7 @@ Doc ampliado: **`prompts-general-pos/MULTIPAGO-MEDIOS-POR-TICKET.md`**.
 - [ ] Smoke: venta mixta → BD líneas → cierre por medio → tirilla/historial
 - [ ] Smoke: ticket rápido → `historial_recibo_pago` + `VTA-` → aparece en Ingresos (Ventas)
 - [ ] Smoke: Ingresos usa Ventas sistema (no Contado)
+- [ ] Smoke: Historial Tickets carga; filas con `VTA-######` (0 filas `VTA-LEGACY-`; columna HRE `nombre_cliente`)
+- [ ] Smoke: OF id 4/5 = Caja Menor / Caja General (FISICA, sin MP); no «Efectivo: base para proveedores» ni «Reserva pago proveedores»
+- [ ] Smoke: último corte legacy con `base_siguiente_efectivo` = `corte-venta.base-efectivo`; Caja Menor = Contado efectivo − esa base; primer cierre v02 muestra Base 150000 (no el Contado prod)
+- [ ] Smoke: Base QR/Nequi del cierre = saldo OF de ese medio (no Contado prod)

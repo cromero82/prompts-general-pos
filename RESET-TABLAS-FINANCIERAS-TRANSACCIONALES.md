@@ -23,7 +23,9 @@ Instrucciones para cualquier IA: vaciar datos operativos de prueba **sin** tocar
 
 ## Qué sí vaciar (transaccional)
 
-Cortes, ledger OF, egresos, tickets/recibos/historial + **`historial_recibo_pago`**, documentos VTA, consecutivos, kardex/movimientos inventario, estadistica_fin, flujo_dinero, **notificaciones email**, **CxC/abonos**, cargues e historial precio.
+Cortes, ledger OF, egresos, tickets/recibos/historial + **`historial_recibo_pago`**, documentos VTA, consecutivos, kardex/movimientos inventario, estadistica_fin, flujo_dinero, **correos recibidos** (`notificacion_email_pago` / HRE), **CxC/abonos**, cargues e historial precio.
+
+**No** vaciar `plantilla_notificacion_pago` (plantillas de extracción de correo).
 
 > Un reset parcial (solo MOF + corte) **no** basta.
 
@@ -67,6 +69,7 @@ UNION ALL SELECT 'movimiento_origen_fondos', COUNT(*) FROM movimiento_origen_fon
 UNION ALL SELECT 'historial_recibo', COUNT(*) FROM historial_recibo
 UNION ALL SELECT 'historial_recibo_pago', COUNT(*) FROM historial_recibo_pago
 UNION ALL SELECT 'egreso', COUNT(*) FROM egreso
+UNION ALL SELECT 'egreso_origen_fondos', COUNT(*) FROM egreso_origen_fondos
 UNION ALL SELECT 'notificacion_email_pago', COUNT(*) FROM notificacion_email_pago
 UNION ALL SELECT 'cuenta_por_cobrar', COUNT(*) FROM cuenta_por_cobrar
 UNION ALL SELECT 'origen_fondos', COUNT(*) FROM origen_fondos

@@ -1,0 +1,26 @@
+{
+  "modulo": "tickets-cxc",
+  "rutaApp": "/apps/tickets",
+  "tituloModulo": "Tickets — crédito (CxC)",
+  "introHtml": "index.html",
+  "articulos": [
+    {
+      "ayudaId": "tickets.cxc.registrar-abono",
+      "titulo": "Cómo cobrar cuando hay crédito",
+      "htmlFile": "secciones/registrar-abono.html",
+      "selectores": [
+        ".metodos-pago-container",
+        ".cxc-rail-cta--abonar",
+        "vex-cxc-ticket-rail"
+      ],
+      "relacionados": ["tickets.cxc.rail"]
+    },
+    {
+      "ayudaId": "tickets.cxc.rail",
+      "titulo": "Panel de crédito del ticket",
+      "htmlFile": "secciones/rail.html",
+      "selectores": ["vex-cxc-ticket-rail", ".cxc-footer-chip"],
+      "relacionados": ["tickets.cxc.registrar-abono"]
+    }
+  ]
+}
