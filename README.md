@@ -1,29 +1,40 @@
 ## Aplicación POS Infinito
 
-El monorepo se entiende como **composición de varios proyectos**. Los prompts
-generales para IAs viven en esta carpeta: **`prompts-general-pos/`**.
+**Este repo (`prompts-general-pos/`) es el contexto general de la app y de la instalación en producción.** Vive en el **mismo path** que los demás proyectos (`…/repos/prompts-general-pos` al lado de `infinito-ai-front`, `pos-relational-data-service`, `intinito-launcher`, …).
+
+No es el código que corre. Es el almacén para IAs y para el humano que instala:
+
+| Quién | Qué vive aquí | Qué no |
+|-------|----------------|--------|
+| Chat en la **laptop de producción** (tienda) | Cómo instalar y arrancar Tienda Infinito | Compilar JARs (eso es cada repo) |
+| Chat de producto | OpenSpec, narrativos, QA tester | SQL de schema (eso es el BE `…/database/`) |
+| Infinito Launcher | Solo se **nombra**: es el panel Iniciar/Detener | No guarda el runbook de prod |
+
+En la PC de tienda, abre Cursor con `prompts-general-pos` (multi-root con los otros repos) y carga **[`CURSOR-IA-PC-TIENDA-V02.md`](CURSOR-IA-PC-TIENDA-V02.md)**. Runbook: **[`MIGRATE-TIENDA-INFINITO-V02.md`](MIGRATE-TIENDA-INFINITO-V02.md)**. La BD `controlneg_rmx_db_v02` llega **ya migrada**; el launcher no aplica scripts.
 
 ### Índice (esta carpeta)
 
 | Quiero… | Abrir |
 |---------|--------|
 | **Índice general** | este README |
-| **Instalar v02 en la PC de tienda** (junto a la caja actual) | [`MIGRATE-TIENDA-INFINITO-V02.md`](MIGRATE-TIENDA-INFINITO-V02.md) · prompt Cursor: [`CURSOR-IA-PC-TIENDA-V02.md`](CURSOR-IA-PC-TIENDA-V02.md) |
+| **Instalar Tienda Infinito en la PC de prod** | [`CURSOR-IA-PC-TIENDA-V02.md`](CURSOR-IA-PC-TIENDA-V02.md) · runbook [`MIGRATE-TIENDA-INFINITO-V02.md`](MIGRATE-TIENDA-INFINITO-V02.md) |
 | Narrativos para IA (cómo/dónde) | [`contextos-ia/`](contextos-ia/) |
 | Contratos OpenSpec | [`openspec/specs/`](openspec/specs/) |
 | Perfil tester / QA de negocio | [`doc-ayuda-inteligente/CONTEXTO-TESTER-POS.md`](doc-ayuda-inteligente/CONTEXTO-TESTER-POS.md) |
 | Arranque laptop (dev + sandbox) | [`ARRANQUE-LOCAL-Y-SANDBOX.md`](ARRANQUE-LOCAL-Y-SANDBOX.md) |
 | Docs triple (contexto + spec + QA) | [`DUAL-DOCS-CURSOR-OPENSPEC.md`](DUAL-DOCS-CURSOR-OPENSPEC.md) |
 
-### Los 5 proyectos
+### Proyectos hermanos (`…/repos/`)
 
-| Pieza | Ruta (relativa al monorepo `repos/`) | Notas |
+| Pieza | Carpeta | Rol |
 |---|---|---|
-| Lógica de tienda (backend) | `pos-relational-data-service/` | Rama **`dian-v2`** (contexto movimientos/OF). Onboarding: `…/doc/contextos/AI-ONBOARDING-basic.md`. Handoff finanzas: `AI-HANDOFF-FINANZAS-2026-08.md`. SQL: `…/doc/contextos/database/`. |
-| Frontend Angular | `infinito-ai-front/` | Rama **`dian-version`**. Finanzas: `.cursor/rules/movimientos-almacen/`. Monitor HAR: handoff Monitor en contextos BE. |
-| Seguridad | `infinito-security/` | `src/main/resources/info.md`, `notas.md` |
-| Correos (Gmail dev) | `infinito-smtp-service/` | `src/main/resources/install/notas.md` |
-| Lanzador (JavaFX) | `intinito-launcher/` | Sube/baja MS, logs, actualizar git + compilar |
+| **Contexto general + instalación prod** | `prompts-general-pos/` | **Este repo.** OpenSpec, narrativos, QA, runbook de tienda. |
+| Lógica de tienda (backend) | `pos-relational-data-service/` | Código + SQL (`…/doc/contextos/database/`). Onboarding de dominio: `AI-ONBOARDING-basic.md`. |
+| Frontend Angular | `infinito-ai-front/` | UI POS. Rules en `.cursor/rules/`. |
+| Seguridad | `infinito-security/` | Auth `:8081` / `:8281`. |
+| Correos (SMTP) | `infinito-smtp-service/` | Gmail dev / SMTP de pila. |
+| Puente (inbound banco) | `puente-tienda/` | `POST /api/email-inbound`. |
+| Lanzador (JavaFX) | `intinito-launcher/` | Panel Iniciar/Detener. **No** es el contexto de instalación. |
 
 **Prod (referencia sin OF completo):** `others-versions/pos-relational-data-service` @ `feature/prod`.
 
@@ -74,6 +85,8 @@ generales para IAs viven en esta carpeta: **`prompts-general-pos/`**.
 | `openspec/specs/notificacion-egreso-vinculo/spec.md` | **OpenSpec:** contratos PAGASTE ↔ egreso |
 | `contextos-ia/ambientes-launcher-tienda-infinito.md` | **IA:** launcher (dev/sandbox/tienda), Worker, hostname de caja |
 | `openspec/specs/ambientes-launcher-tienda-infinito/spec.md` | **OpenSpec:** tres ambientes, túnel propio, health vs reloj |
+| `contextos-ia/lectora-codigo-barras.md` | **IA (aparcado):** lectora HID, pitido sin texto, idle 400 ms |
+| `openspec/specs/lectora-codigo-barras/spec.md` | **OpenSpec (aparcado):** un escaneo = una búsqueda; retomar en caja |
 
 ### Flujo típico al abrir un chat nuevo
 
