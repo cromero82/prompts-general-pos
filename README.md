@@ -10,14 +10,14 @@ No es el código que corre. Es el almacén para IAs y para el humano que instala
 | Chat de producto | OpenSpec, narrativos, QA tester | SQL de schema (eso es el BE `…/database/`) |
 | Infinito Launcher | Solo se **nombra**: es el panel Iniciar/Detener | No guarda el runbook de prod |
 
-En la PC de tienda, abre Cursor con `prompts-general-pos` (multi-root con los otros repos) y carga **[`CURSOR-IA-PC-TIENDA-V02.md`](CURSOR-IA-PC-TIENDA-V02.md)**. Runbook: **[`MIGRATE-TIENDA-INFINITO-V02.md`](MIGRATE-TIENDA-INFINITO-V02.md)**. La BD `controlneg_rmx_db_v02` llega **ya migrada**; el launcher no aplica scripts.
+En la PC de tienda, abre Cursor con `prompts-general-pos` (multi-root con los otros repos) y carga **[`CURSOR-IA-PC-TIENDA-V02.md`](CURSOR-IA-PC-TIENDA-V02.md)**. La BD `controlneg_rmx_db_v02` llega **ya migrada**; el launcher no aplica scripts.
 
 ### Índice (esta carpeta)
 
 | Quiero… | Abrir |
 |---------|--------|
 | **Índice general** | este README |
-| **Instalar Tienda Infinito en la PC de prod** | [`CURSOR-IA-PC-TIENDA-V02.md`](CURSOR-IA-PC-TIENDA-V02.md) · runbook [`MIGRATE-TIENDA-INFINITO-V02.md`](MIGRATE-TIENDA-INFINITO-V02.md) |
+| **Instalar Tienda Infinito en la PC de prod** | [`CURSOR-IA-PC-TIENDA-V02.md`](CURSOR-IA-PC-TIENDA-V02.md) |
 | Narrativos para IA (cómo/dónde) | [`contextos-ia/`](contextos-ia/) |
 | Contratos OpenSpec | [`openspec/specs/`](openspec/specs/) |
 | Perfil tester / QA de negocio | [`doc-ayuda-inteligente/CONTEXTO-TESTER-POS.md`](doc-ayuda-inteligente/CONTEXTO-TESTER-POS.md) |
@@ -41,18 +41,15 @@ En la PC de tienda, abre Cursor con `prompts-general-pos` (multi-root con los ot
 ### Base de datos
 
 - PostgreSQL `controlneg_rmx_db` — lógica de tienda (**caja actual**).
-- PostgreSQL `controlneg_rmx_db_v02` — pila Tienda Infinito en paralelo. Runbook: **`MIGRATE-TIENDA-INFINITO-V02.md`**. SQL: `create-db-controlneg-rmx-db-v02.sql`.
-- Migraciones schema (sobre la BD que indiques): `MIGRATE-PROD-TO-DIAN-V2.md` + `apply-migrate-prod-to-dian-v2.sh` en contextos BE.
+- PostgreSQL `controlneg_rmx_db_v02` — pila Tienda Infinito en paralelo (llega **ya migrada**). SQL: `create-db-controlneg-rmx-db-v02.sql`.
+- Cambios de BD → **migración nueva** (SQL `NN_…` en `pos-relational-data-service/…/doc/contextos/database/`). Prod ya migrada.
 - Reset datos de prueba: **`reset-tablas-financieras-transaccionales-v2.sql`** (no el legacy v1).
 
 ### Prompts de esta carpeta (IA)
 
 | Archivo | Cuándo usarlo |
 |---|---|
-| `COMPILACION-CAMBIOS-DIAN-VS-PROD.md` | Delta prod ↔ dian (FE/BE/BD) |
-| `MIGRATE-TIENDA-INFINITO-V02.md` | **Ops tienda:** instalar pila v02 (puertos 4220/8288, BD `_v02`) **sin apagar** la caja actual |
 | `create-db-controlneg-rmx-db-v02.sql` | Crear `controlneg_rmx_db_v02` (vacía o ver comentarios TEMPLATE) |
-| `MIGRATE-PROD-TO-DIAN-V2.md` | Migrar schema BD prod → dian-v2 (incluye `30_` multipago); en v02 usa esa BD, no la vieja |
 | `MULTIPAGO-MEDIOS-POR-TICKET.md` | Diseño + estado de cobro con 2–3 medios; corte por líneas |
 | `RESET-TABLAS-FINANCIERAS-TRANSACCIONALES.md` | Instructivo reset (DBeaver, base inicial) |
 | `reset-tablas-financieras-transaccionales-v2.sql` | **SQL canónico** (incl. egreso, stats, aserción BASE_INICIAL) |
@@ -92,11 +89,11 @@ En la PC de tienda, abre Cursor con `prompts-general-pos` (multi-root con los ot
 
 1. Leer `pos-relational-data-service/.../AI-ONBOARDING-basic.md` + este README.
 2. Finanzas/movimientos → `AI-HANDOFF-FINANZAS-2026-08.md`.
-3. Si la BD no tiene OF / distribución / multipago schema → `MIGRATE-PROD-TO-DIAN-V2.md`.
+3. BD de trabajo → ya migrada en prod; cambios nuevos = migración nueva (SQL `NN_…` en el BE).
 4. Cobro mixto / líneas de pago → `MULTIPAGO-MEDIOS-POR-TICKET.md`.
 5. Si se reinician pruebas → reset **v2** (Auto-commit ON en DBeaver) → logout + login admin.
 6. BE `dian-v2` + FE alineados al schema.
 7. Trabajo en OF / correos banco → `contextos-ia/origenes-fondos.md`. Ayuda de usuario → `ayuda-documental/`.
 8. Ayuda contextual overlay (CxC / genérico) → `contextos-ia/guia-en-linea.md`.
 9. Acompañar a una **tester de negocio** → entregar **solo** `doc-ayuda-inteligente/CONTEXTO-TESTER-POS.md` (archivo autónomo; ella lo carga en su IA, sin carpeta de MDs).
-10. Instalar / convivir v02 en la PC de tienda → **`MIGRATE-TIENDA-INFINITO-V02.md`**. Narrativo: `contextos-ia/ambientes-launcher-tienda-infinito.md`.
+10. Instalar / convivir v02 en la PC de tienda → **`CURSOR-IA-PC-TIENDA-V02.md`**. Narrativo: `contextos-ia/ambientes-launcher-tienda-infinito.md`.
