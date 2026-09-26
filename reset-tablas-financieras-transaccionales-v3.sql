@@ -36,6 +36,8 @@ DECLARE
     -- Cortes / arqueo
     'corte_venta_detalle',
     'ventas_tipo',
+    'corte_venta_correccion_detalle',
+    'corte_venta_correccion',
     'corte_venta',
     -- Ledger OF + egresos (líneas 1:N antes del documento)
     'movimiento_origen_fondos',
@@ -76,7 +78,7 @@ DECLARE
     'cargue_productos',
     'historial_precio_producto',
     'historial_producto'
-  ];
+];
   t text;
   existentes text[] := ARRAY[]::text[];
 BEGIN

@@ -7,7 +7,7 @@ context: |
 
   ## Producto
   POS Infinito (tiendas Colombia). Monorepo lógico en repos/:
-  - infinito-ai-front (Angular, :4200) — rama típica develop
+  - infinito-ai-front (Angular, :4200)
   - pos-relational-data-service (Java, :8088) — BD controlneg_rmx_db
   - puente-tienda (Java, :8095) — QR / email inbound / confirmación electrónica
   - infinito-security, infinito-smtp-service, intinito-launcher (typo histórico del repo)
