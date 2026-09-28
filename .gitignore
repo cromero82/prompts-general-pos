@@ -1,0 +1,4 @@
+# Este repo es documentación: el markdown no se ignora aquí.
+# El *.md global (~/.gitignore_global) se anula en .git/info/exclude.
+*~
+.DS_Store

@@ -83,6 +83,8 @@ En la PC de tienda, abre Cursor con `prompts-general-pos` (multi-root con los ot
 | `openspec/specs/ambientes-launcher-tienda-infinito/spec.md` | **OpenSpec:** tres ambientes, túnel propio, health vs reloj |
 | `contextos-ia/lectora-codigo-barras.md` | **IA (aparcado):** lectora HID, pitido sin texto, idle 400 ms |
 | `openspec/specs/lectora-codigo-barras/spec.md` | **OpenSpec (aparcado):** un escaneo = una búsqueda; retomar en caja |
+| `contextos-ia/ajustes-configurables-sistema.md` | **IA:** modal admin, `configuracion_app.value`, sync `localStorage` |
+| `openspec/specs/ajustes-configurables-sistema/spec.md` | **OpenSpec:** ajustes configurables del sistema |
 
 ### Flujo típico al abrir un chat nuevo
 
