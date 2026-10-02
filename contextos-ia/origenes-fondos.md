@@ -2,7 +2,7 @@
 
 Documento para **cualquier IA** que retome el POS Infinito. Complementa `GLOSARIO-NUCLEO-FINANCIERO.md` y `interceptar-pagos-tunel.md`. No sustituye el código.
 
-**Última actualización:** 2026-09-12 (Caja Menor / Caja General vs labels prod).  
+**Última actualización:** 2026-10-01 (modo flexible solo en medios no físicos).  
 **Docs triple:** `DUAL-DOCS-CURSOR-OPENSPEC.md` · tester §4.10 / §4.11 / §4.15.  
 **Migrate v02:** `MIGRATE-TIENDA-INFINITO-V02.md` lección #11 + `63_align_caja_menor_general.sql`.
 
@@ -95,6 +95,19 @@ Bancolombia → Gmail (filtro por frase) → pagos@mayaksoluciones.com
 | **A Cuenta del dueño** | Misma fila | Traslado a OF personal (no es gasto). Acumula; para **bajar** el saldo → Egresos PERSONAL/DIVIDENDOS con Persona **dueño/propietario** (ver `egresos.md`). |
 | **Trasladar** | Fila impacto + o arrastrar, o botón header | Mueve saldo a otro OF según reglas. Caso típico: retiro cajero/sucursal en Sin Clasificar → Caja Efectivo/Menor/General (plata que se usará en el local). |
 
+## Modo estricto / flexible
+
+Flag: `establecimiento.manejo_estricto_cuentas` (Datos del negocio). Default **false** (flexible).
+
+| Modo | Origen `FISICA` | `ELECTRONICA`, `MIXTA` o sin naturaleza |
+|------|-----------------|------------------------------------------|
+| Estricto (`true`) | Bloquea si saldo &lt; valor | Bloquea si saldo &lt; valor |
+| Flexible (`false`) | **Igual bloquea** | Permite; el egreso solo advierte |
+
+BE: `MovimientoOrigenFondosServiceImpl.exigeSaldoSuficiente` dentro de `validarSalidaSuficiente`. Cubre egreso, traslado y ajuste con impacto negativo. `SALIDA_DEVOLUCION_VENTA` no pasa por esa validación (reembolso de venta que aún no está en el ledger).
+
+FE: insignia «Modo flexible (solo electrónicos)»; en egreso nuevo, origen físico sin saldo deshabilita guardar. Spec: `openspec/specs/modo-cuentas-of/spec.md`.
+
 ## Reglas de traslado UI (`traslado-of.util.ts`)
 
 1. **Electrónico** (hijo o raíz): hacia **cualquier padre FISICA** (cajas). También padre/hermanos del mismo árbol electrónico, y destino *Cuenta del dueño* (clasif. personal).
@@ -134,6 +147,7 @@ Diálogo Trasladar: destinos filtrados; origen se puede bloquear si viene de una
   - flash navegación: `.mov-row--nav-flash` ~1.8 s.
 - Orden del historial: **id DESC** (más reciente arriba). No usar `fecha` (es `LocalDate`, sin hora) ni `fechaCreacion` (se desordena si el reloj del host se mueve).
 - Spec UI lista: `openspec/specs/origenes-fondos-lista/spec.md`.
+- Spec saldo estricto/flexible: `openspec/specs/modo-cuentas-of/spec.md`.
 
 ## Tipos de movimiento (ledger)
 

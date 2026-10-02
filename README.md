@@ -65,6 +65,7 @@ En la PC de tienda, abre Cursor con `prompts-general-pos` (multi-root con los ot
 | `contextos-ia/origenes-fondos.md` | **IA:** OF, plantillas, Trasladar, DnD, Atrás/Adelante, **cebra tabla movimientos** |
 | `openspec/specs/navegacion-traslados-of/spec.md` | **OpenSpec:** navegación entre patas de traslado |
 | `openspec/specs/origenes-fondos-lista/spec.md` | **OpenSpec:** cebra/densidad historial OF |
+| `openspec/specs/modo-cuentas-of/spec.md` | **OpenSpec:** flexible solo en medios no físicos; efectivo físico siempre exige saldo |
 | `contextos-ia/guia-en-linea.md` | **IA:** componente genérico ayuda en línea + caso Tickets/CxC |
 | `contextos-ia/sandbox-reset-transaccional.md` | **IA:** sandbox (clone BD, reset, **consulta BD SELECT**, flags) |
 | `openspec/specs/sandbox-entorno-pruebas/spec.md` | **OpenSpec:** contratos sandbox (reset + consulta-bd) |

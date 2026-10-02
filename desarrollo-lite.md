@@ -20,7 +20,7 @@ Launcher, seguridad, SMTP, puente, Caddy/túnel, sandbox, arranques dev/sandbox,
 
 | Funcionalidad | Contexto | Spec OpenSpec |
 |---|---|---|
-| Orígenes de fondos / ledger / traslados | `contextos-ia/origenes-fondos.md` | `origenes-fondos-lista` · `navegacion-traslados-of` |
+| Orígenes de fondos / ledger / traslados | `contextos-ia/origenes-fondos.md` | `origenes-fondos-lista` · `navegacion-traslados-of` · `modo-cuentas-of` |
 | Egresos (naturaleza, personas, tipo) | `contextos-ia/egresos.md` | `egresos-naturaleza-tipo` · `egresos-personas` |
 | Pagos electrónicos / confirmación | `contextos-ia/confirmacion-pagos-electronicos.md` | `confirmacion-pagos-electronicos` |
 | Métodos de pago / notificación | `contextos-ia/metodos-pago-notificacion.md` | `metodos-pago-notificacion` |

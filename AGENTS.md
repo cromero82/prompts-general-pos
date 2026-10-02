@@ -27,6 +27,7 @@ CLI: `npx @fission-ai/openspec …` desde este directorio.
 - `confirmacion-pagos-electronicos` — QR/email/panel/Asociar/monto distinto/faltante→CxC
 - `navegacion-traslados-of` — Atrás/Adelante entre patas de traslado OF
 - `origenes-fondos-lista` — cebra/densidad tabla movimientos OF
+- `modo-cuentas-of` — flexible solo en medios no físicos; efectivo `FISICA` siempre exige saldo
 - `sandbox-entorno-pruebas` — aislamiento sandbox, reset transaccional, consulta BD SELECT-only
 - `egresos-naturaleza-tipo` — tipo snapshot + naturaleza en egreso, filtros (Naturaleza primero), export CSV
 - `egresos-personas` — catálogo Personas, XOR proveedor, `esDuenoPropietario`, origen Cuenta del dueño

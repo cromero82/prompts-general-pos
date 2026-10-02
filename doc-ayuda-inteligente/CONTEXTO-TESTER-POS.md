@@ -430,7 +430,7 @@ El tipo queda guardado en el egreso. Export: botón **CSV** (respeta filtros; co
 3. Egreso PERSONAL + persona dueño → aparece Cuenta del dueño → guardar → baja saldo.
 4. Misma naturaleza + persona sin flag → no aparece / no guarda con ese origen.
 5. Persona dueño + naturaleza compra → no puede usar Cuenta del dueño.
-6. Egreso desde Caja (OF visible) sigue igual.
+6. Egreso desde Caja (OF visible) sigue igual **si hay saldo**. En modo flexible, Caja: Efectivo / Menor / General **no** dejan egresar de más: el botón no guarda y avisa que el efectivo físico exige saldo. Desde QR o Nequi sí deja, con advertencia.
 
 **Notificación PAGASTE (detalle en §4.15):** si llega un aviso de que pagaste y hay un egreso del mismo monto, **no** debe ir solo a Sin Clasificar. Campanita + diálogo. Tras asociar, la lista de Egresos puede mostrar **solo ese** registro: el botón **Borrar filtro notificación** (junto al título y sobre la tabla) vuelve a la lista completa.
 
@@ -451,6 +451,10 @@ Si **Sin Clasificar** titila con un número (mismo gesto que tickets sin corte),
 
 En el **pie de pantalla** se ven las cuatro cifras del turno (Ventas turno, Efectivo disponible, Dinero medios electrónicos, Total dinero disponible), las mismas que encabezan el Cierre de turno (§4.9). Al arrastrar, al pasar el puntero por un control o ante un aviso «No permitido», el pie muestra ese mensaje y luego vuelve a las cuatro cifras.
 
+**Modo flexible (insignia «solo electrónicos»):** si Datos del negocio tiene el manejo estricto apagado, un egreso o traslado desde **caja física** (Efectivo, Menor, General) se bloquea cuando no hay saldo. Desde un medio electrónico (QR, Nequi, Sin Clasificar) se permite y el saldo puede quedar negativo. Con el manejo estricto encendido, el bloqueo vale para todos los bolsillos.
+
+**No es bug:** que un reembolso de venta (anular o bajar el total, origen Caja: Efectivo) salga aunque la caja no alcance. Esa devolución no usa la regla de saldo.
+
 **Trasladar:** $X de A → B; en A baja y en B sube.
 
 **Navegar un traslado (Atrás / Adelante)** — comportamiento esperado:
@@ -461,7 +465,7 @@ En el **pie de pantalla** se ven las cuatro cifras del turno (Ventas turno, Efec
 
 **No es bug:** no todos los pares de bolsillos permiten traslado; “Sin clasificar” recibe avisos del banco por clasificar **cuando no hay egreso candidato**; Dueños ≠ arqueo del turno; filas de la tabla de movimientos con **rayas alternas** (cebra) es diseño; Sin Clasificar titila si hay PAGASTE por ligar.
 
-**Sí reportar:** traslado OK pero solo se movió un lado; **Adelante/Atrás** no cambian de bolsillo o no resaltan; saldos que bailan al refrescar sin movimientos nuevos; icono sin corte abre lista distinta al filtro Historial equivalente; total parcial desalineado o distinto al parcial de la tarjeta sin razón; PAGASTE con egreso del mismo monto y **igual** aparece movimiento nuevo en Sin Clasificar **sin** que nadie pulsara Enviar a Sin clasificar; el movimiento más nuevo (id más alto) no está arriba.
+**Sí reportar:** traslado OK pero solo se movió un lado; **Adelante/Atrás** no cambian de bolsillo o no resaltan; saldos que bailan al refrescar sin movimientos nuevos; icono sin corte abre lista distinta al filtro Historial equivalente; total parcial desalineado o distinto al parcial de la tarjeta sin razón; PAGASTE con egreso del mismo monto y **igual** aparece movimiento nuevo en Sin Clasificar **sin** que nadie pulsara Enviar a Sin clasificar; el movimiento más nuevo (id más alto) no está arriba; en modo flexible, un egreso o traslado desde **caja física** que deja el saldo negativo; en modo flexible, un egreso desde QR/Nequi **bloqueado** solo porque el saldo no alcanza.
 
 ---
 

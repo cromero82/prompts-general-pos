@@ -41,6 +41,7 @@ No compiten: el narrativo explica *cómo/dónde*; OpenSpec fija *qué debe cumpl
 | `metodos-pago-notificacion` | `openspec/specs/metodos-pago-notificacion/spec.md` | `contextos-ia/metodos-pago-notificacion.md` | `CONTEXTO-TESTER-POS.md` §4.12 / §4.14 / §10.5 |
 | `navegacion-traslados-of` | `openspec/specs/navegacion-traslados-of/spec.md` | `contextos-ia/origenes-fondos.md` | `CONTEXTO-TESTER-POS.md` §4.11 |
 | `origenes-fondos-lista` | `openspec/specs/origenes-fondos-lista/spec.md` | `contextos-ia/origenes-fondos.md` | `CONTEXTO-TESTER-POS.md` §4.11 (cebra, orden id DESC) |
+| `modo-cuentas-of` | `openspec/specs/modo-cuentas-of/spec.md` | `contextos-ia/origenes-fondos.md` | `CONTEXTO-TESTER-POS.md` §4.10 / §4.11 |
 | `sandbox-entorno-pruebas` | `openspec/specs/sandbox-entorno-pruebas/spec.md` | `contextos-ia/sandbox-reset-transaccional.md` | `CONTEXTO-TESTER-POS.md` § ambientes (reset); consulta BD = API/IA |
 | `egresos-naturaleza-tipo` | `openspec/specs/egresos-naturaleza-tipo/spec.md` | `contextos-ia/egresos.md` | `CONTEXTO-TESTER-POS.md` §4.10 |
 | `egresos-personas` | `openspec/specs/egresos-personas/spec.md` | `contextos-ia/egresos.md` | `CONTEXTO-TESTER-POS.md` §4.10 |
@@ -95,6 +96,7 @@ En Cursor (con este folder abierto o multi-root): `/opsx-propose`, `/opsx-apply`
 2. Specs según el tema:
    - navegación Atrás/Adelante → `openspec/specs/navegacion-traslados-of/spec.md`
    - cebra / densidad / orden id DESC del historial → `openspec/specs/origenes-fondos-lista/spec.md`
+   - modo estricto / flexible (efectivo físico siempre exige saldo) → `openspec/specs/modo-cuentas-of/spec.md`
 3. Tester: `CONTEXTO-TESTER-POS.md` §4.11.
 4. Código FE principal: `infinito-ai-front/.../origenes-fondos/origenes-list/`.
 
